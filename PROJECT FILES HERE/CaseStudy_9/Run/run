@@ -22,7 +22,7 @@ cp fort.21         lj.res
  mv fort.66         lj.prt
  #perform block analysis
   cp lj.prth fort.31
-  mv  lj.prt fort.32
+  cp  lj.prt fort.32
   ../Block/block   		>>& out 
   rm fort.*
 end
