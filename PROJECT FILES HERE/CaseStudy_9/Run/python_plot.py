@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Plot Grand-Canonical MC simulation output
-Usage: python plot_mc.py lj.prt
+Usage: python python_plot.py lj.prt
 """
 
 import numpy as np
