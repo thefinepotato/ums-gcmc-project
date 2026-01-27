@@ -1,0 +1,41 @@
+[build-system]
+requires = ["setuptools>=70", "wheel", "pybind11>=2.10"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "molsim"
+version = "1.1.0"
+description = "Molecular simulation exercises"
+readme = "README.md"
+authors = [
+    { name = "van 't Hoff Institute of Molecular Sciences, University of Amsterdam", email = "d.dubbeldam@uva.nl" },
+]
+requires-python = ">=3.10"
+dependencies = ["pybind11", "numpy", "matplotlib", "scipy"]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["molsim*"]
+
+[[tool.setuptools.ext-modules]]
+name = "molsim._molsim"
+sources = [
+    "molsim/pybindings.cpp",
+    "molsim/hardDisks/hardDisks.cpp",
+    "molsim/molecularDynamics/md.cpp",
+    "molsim/molecularDynamics/sample.cpp",
+    "molsim/molecularDynamics/thermostats.cpp",
+    "molsim/monteCarlo/mc.cpp",
+    "molsim/monteCarlo/moves.cpp",
+    "molsim/monteCarlo/gibbs.cpp",
+]
+
+include-dirs = [
+    "molsim/hardDisks",
+    "molsim/molecularDynamics",
+    "molsim/monteCarlo",
+    "molsim/utils",
+]
+
+language = "c++"
+extra-compile-args = ["-std=c++23"]

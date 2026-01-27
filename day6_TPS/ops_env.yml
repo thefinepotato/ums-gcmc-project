@@ -1,0 +1,13 @@
+name: ops_env
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.9
+  - openmm=8.0.0
+  - openpathsampling=1.5.2
+  - openmmtools
+  - mdtraj
+  - nglview
+  - jupyter
+  - tqdm

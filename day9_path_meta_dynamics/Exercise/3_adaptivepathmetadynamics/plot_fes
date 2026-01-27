@@ -1,0 +1,9 @@
+set terminal png
+set output 'plot_fes.png'
+
+set grid
+set xlabel "pcv.s"
+set ylabel "kJ/mol"
+
+plot 'fes_1000.dat' u 1:($2-200) w l t''
+
