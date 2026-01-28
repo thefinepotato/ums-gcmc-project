@@ -37,7 +37,7 @@ c
       READ (15, *)
       READ (15, *) Ndispl, Nexch
       READ (15, *)
-      READ (15, *) NPART, TEMP, rho, pid
+      READ (15, *) NPART, TEMP, rho, pid, LZ
       IF (NPART.GT.NPMax) THEN
          WRITE (6, *) ' ERROR: number of particles too large'
          STOP
@@ -55,10 +55,13 @@ c        ---generate configuration form lattice
          CALL LATTICE
       ELSE
          WRITE (6, *) ' read conf from disk '
-         READ (11, *) BOX
-         READ (11, *) NPART
-         READ (11, *) Dr
-         rho = NPART/BOX**3
+      READ (11, *) BOX
+      READ (11, *) LZ
+      READ (11, *) NPART
+      READ (11, *) Dr
+
+
+         rho = NPART/(BOX*BOX*LZ)
          HBOX = 0.5D0*BOX
          WRITE (6, 99007) rho
          DO i = 1, NPART

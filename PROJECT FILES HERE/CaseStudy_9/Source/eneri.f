@@ -26,11 +26,6 @@ c           ---minimum immage
             ELSE
                IF (dy.LT.-HBOX) dy = dy + BOX
             END IF
-            IF (dz.GT.HBOX) THEN
-               dz = dz - BOX
-            ELSE
-               IF (dz.LT.-HBOX) dz = dz + BOX
-            END IF
             r2 = dx*dx + dy*dy + dz*dz
 c           ---calculate energy and virial pair i,j
             CALL ENER(enij, virij, r2)

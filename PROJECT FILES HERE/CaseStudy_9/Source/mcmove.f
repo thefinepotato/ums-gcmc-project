@@ -34,8 +34,9 @@ c        ---put particle in simulation box
          IF (xn.GT.BOX) xn = xn - BOX
          IF (yn.LT.0) yn = yn + BOX
          IF (yn.GT.BOX) yn = yn - BOX
-         IF (zn.LT.0) zn = zn + BOX
-         IF (zn.GT.BOX) zn = zn - BOX
+               IF (zn.LT.0.0D0) jb = 0
+      IF (zn.GT.LZ)   jb = 0
+
          X(o) = xn
          Y(o) = yn
          Z(o) = zn

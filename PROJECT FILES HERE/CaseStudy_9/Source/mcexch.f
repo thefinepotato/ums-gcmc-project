@@ -24,7 +24,7 @@ c     ---select to add of delete a particle
 c        ---add a particle at a random position
          xn = RANF(Iseed)*BOX
          yn = RANF(Iseed)*BOX
-         zn = RANF(Iseed)*BOX
+         zn = RANF(Iseed)*Lz
          o = NPART + 1
          jb = 1
 c        ---determine energy of this particle

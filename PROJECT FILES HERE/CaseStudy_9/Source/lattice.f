@@ -9,7 +9,7 @@ c     ---place `npart' particles on a lattice with density 'rho'
       INTEGER i, j, k, itel, n
       DOUBLE PRECISION dx, dy, dz, del
  
-      del = (BOX**3)**(1.D0/3.D0)
+      del = (BOX*BOX*LZ)**(1.D0/3.D0)
       n = INT(NPART**(1.D0/3.D0)) + 1
       IF (n.EQ.0) n = 1
       del = del/DBLE(n)
@@ -25,7 +25,7 @@ c     ---place `npart' particles on a lattice with density 'rho'
             dz = -del
             DO k = 1, n
                dz = dz + del
-               IF (dz.GT.BOX) dz = dz - BOX
+               IF (dz.GT.LZ) dz = dz - LZ
                IF (itel.LT.NPART) THEN
                   itel = itel + 1
                   X(itel) = dx
