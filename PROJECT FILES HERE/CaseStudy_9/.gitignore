@@ -1,0 +1,22 @@
+Run_L*/
+Run/Run_L*/
+Run/out
+out
+rho_z.dat
+*.res
+
+# build / artifacts
+Block/block
+*.o
+# run folders / outputs
+Run_L*/
+Run/Run_L*/
+Run/out
+out
+rho_z.dat
+*.res
+
+# build / artifacts
+Block/block
+*.o
+
