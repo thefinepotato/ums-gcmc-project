@@ -1,0 +1,91 @@
+ **************** MC_GRAND ***************
+ Initialisation on lattice: 
+        50 particles placed on a lattice
+  Number of equilibration cycles             :       200
+  Number of production cycles                :      2000
+  Sample frequency                           :         2
+
+  Number of att. to displ. a part. per cycle :       100
+  Maximum displacement                       :     0.090
+  Number of att. to exchange part. per cycle :        10
+
+
+  Number of particles                        :        50
+  Temperature                                :     0.900
+  Ideal gas pressure reservoir               :     0.500
+  Density                                    :     0.600
+  Box length                                 :     4.082
+
+  Model parameters: 
+     epsilon: 1.000
+     sigma  : 1.000
+     mass   : 1.000
+ Simulations with tail correction: 
+ Potential truncated at  Rc =:     2.041
+ Tail corrections:   energy =     -0.588 pressure     -0.703
+
+
+  ******** test random numbers ***********
+  i,ranf()            1  0.85927803648331647     
+  i,ranf()            2  0.11043871012919715     
+  i,ranf()            3  0.37343370330170500     
+  i,ranf()            4  0.49441680255004172     
+  i,ranf()            5  0.31954203284198734     
+ Total energy initial configuration:   -180.57507
+ Total virial initial configuration:   1467.03007
+  Start equilibration 
+ ======>> Done           40  out of          200          66
+ Max. displ. set to :  0.121 (old :  0.090)
+ Frac. acc.: 0.67 attempts:    4001 succes:    2681
+ ======>> Done           80  out of          200          67
+ Max. displ. set to :  0.158 (old :  0.121)
+ Frac. acc.: 0.66 attempts:    4032 succes:    2643
+ ======>> Done          120  out of          200          69
+ Max. displ. set to :  0.190 (old :  0.158)
+ Frac. acc.: 0.60 attempts:    3987 succes:    2392
+ ======>> Done          160  out of          200          71
+ Max. displ. set to :  0.197 (old :  0.190)
+ Frac. acc.: 0.52 attempts:    3995 succes:    2071
+ ======>> Done          200  out of          200          72
+ Max. displ. set to :  0.194 (old :  0.197)
+ Frac. acc.: 0.49 attempts:    4013 succes:    1979
+ Number of att. to displ. a part.  :      20028
+ success:      11766(= 58.75%)
+ Number of att. to exch. part      :       1972
+ success:         32(=  1.62%)
+  ######### PROBLEMS ENERGY ################ 
+ Total energy end of simulation    :   -381.64027
+       running energy              :   -374.54313
+       difference                  :  -0.70971E+01
+ Total virial end of simulation    :    276.50673
+       running virial              :    276.50673
+       difference                  :   0.85265E-12
+  Start production 
+ ======>> Done          400  out of         2000          75
+ Max. displ. set to :  0.193 (old :  0.194)
+ Frac. acc.: 0.50 attempts:   40075 succes:   19928
+ ======>> Done          800  out of         2000          78
+ Max. displ. set to :  0.183 (old :  0.193)
+ Frac. acc.: 0.47 attempts:   40059 succes:   18986
+ ======>> Done         1200  out of         2000          78
+ Max. displ. set to :  0.179 (old :  0.183)
+ Frac. acc.: 0.49 attempts:   40119 succes:   19640
+ ======>> Done         1600  out of         2000          79
+ Max. displ. set to :  0.170 (old :  0.179)
+ Frac. acc.: 0.48 attempts:   39953 succes:   18980
+ ======>> Done         2000  out of         2000          79
+ Max. displ. set to :  0.172 (old :  0.170)
+ Frac. acc.: 0.51 attempts:   40042 succes:   20261
+ Number of att. to displ. a part.  :     200248
+ success:      97795(= 48.84%)
+ Number of att. to exch. part      :      19752
+ success:          9(=  0.05%)
+  ######### PROBLEMS ENERGY ################ 
+ Total energy end of simulation    :   -449.98326
+       running energy              :   -440.09116
+       difference                  :  -0.98921E+01
+ Total virial end of simulation    :    790.27520
+       running virial              :    790.27520
+       difference                  :   0.10004E-10
+ Excess chemical potential (res.)  :     -0.45732
+ Chemical potential        (res.)  :     -0.52901

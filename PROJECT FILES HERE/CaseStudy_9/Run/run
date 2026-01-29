@@ -1,7 +1,7 @@
 #! /bin/csh -f
 
 cp lj.model        fort.25
-foreach pid  (0.016 )
+foreach pid  (0.001 0.005 0.01 0.05 0.1 0.5)
   echo " --- pid ${pid} "  	
   echo " --- pid ${pid} "  	>> out
   cat > fort.15  <<endofdata

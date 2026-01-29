@@ -1111,3 +1111,358 @@ Note: The following floating-point exceptions are signalling: IEEE_UNDERFLOW_FLA
          3   0.0287   0.0061   0.0467   0.0100   0.0105   0.0022
          4   0.0398   0.0126   0.0335   0.0106   0.0147   0.0047
          5   0.0498   0.0249   0.0201   0.0101   0.0204   0.0102
+ --- pid 0.001 
+Note: The following floating-point exceptions are signalling: IEEE_UNDERFLOW_FLAG
+ **************** MC_GRAND ***************
+ Initialisation on lattice: 
+        50 particles placed on a lattice
+  Number of equilibration cycles             :       100
+  Number of production cycles                :       200
+  Sample frequency                           :         2
+
+  Number of att. to displ. a part. per cycle :       100
+  Maximum displacement                       :     0.090
+  Number of att. to exchange part. per cycle :        10
+
+
+  Number of particles                        :        50
+  Temperature                                :     0.900
+  Ideal gas pressure reservoir               :     0.001
+  Density                                    :     0.600
+  Box length                                 :     4.082
+
+  Model parameters: 
+     epsilon: 1.000
+     sigma  : 1.000
+     mass   : 1.000
+ Simulations with tail correction: 
+ Potential truncated at  Rc =:     2.041
+ Tail corrections:   energy =     -0.588 pressure     -0.703
+
+
+  ******** test random numbers ***********
+  i,ranf()            1  0.85927803648331647     
+  i,ranf()            2  0.11043871012919715     
+  i,ranf()            3  0.37343370330170500     
+  i,ranf()            4  0.49441680255004172     
+  i,ranf()            5  0.31954203284198734     
+ Total energy initial configuration:   -180.57507
+ Total virial initial configuration:   1467.03007
+  Start equilibration 
+ ======>> Done           20  out of          100           0
+ Max. displ. set to :  0.135 (old :  0.090)
+ Frac. acc.: 0.81 attempts:    2000 succes:    1615
+ ======>> Done           40  out of          100           0
+ Max. displ. set to :  0.203 (old :  0.135)
+ Frac. acc.: 1.00 attempts:    2012 succes:    2012
+ ======>> Done           60  out of          100           0
+ Max. displ. set to :  0.304 (old :  0.203)
+ Frac. acc.: 1.00 attempts:    2007 succes:    2003
+ ======>> Done           80  out of          100           0
+ Max. displ. set to :  0.456 (old :  0.304)
+ Frac. acc.: 0.98 attempts:    2008 succes:    1971
+ ======>> Done          100  out of          100           0
+ Max. displ. set to :  0.683 (old :  0.456)
+ Frac. acc.: 0.97 attempts:    2018 succes:    1955
+ Number of att. to displ. a part.  :      10045
+ success:       9556(= 95.13%)
+ Number of att. to exch. part      :        955
+ success:        128(= 13.40%)
+  ######### PROBLEMS ENERGY ################ 
+ Total energy end of simulation    :      0.00000
+       running energy              :     -6.61060
+       difference                  :   0.66106E+01
+ Total virial end of simulation    :      0.00000
+       running virial              :     -0.00000
+       difference                  :   0.84199E-12
+  Start production 
+ ======>> Done           40  out of          200           0
+ Max. displ. set to :  1.021 (old :  0.683)
+ Frac. acc.: 0.95 attempts:    4015 succes:    3826
+ ======>> Done           80  out of          200           0
+ Max. displ. set to :  1.021 (old :  1.021)
+ Frac. acc.: 0.95 attempts:    4017 succes:    3831
+ ======>> Done          120  out of          200           1
+ Max. displ. set to :  1.021 (old :  1.021)
+ Frac. acc.: 0.94 attempts:    4010 succes:    3786
+ ======>> Done          160  out of          200           1
+ Max. displ. set to :  1.021 (old :  1.021)
+ Frac. acc.: 0.95 attempts:    3964 succes:    3760
+ ======>> Done          200  out of          200           0
+ Max. displ. set to :  1.021 (old :  1.021)
+ Frac. acc.: 0.95 attempts:    3990 succes:    3782
+ Number of att. to displ. a part.  :      19996
+ success:      18985(= 94.94%)
+ Number of att. to exch. part      :       2004
+ success:        204(= 10.18%)
+  ######### PROBLEMS ENERGY ################ 
+ Total energy end of simulation    :      0.00000
+       running energy              :     -6.61060
+       difference                  :   0.66106E+01
+ Total virial end of simulation    :      0.00000
+       running virial              :     -0.00000
+       difference                  :   0.84199E-12
+ Excess chemical potential (res.)  :     -0.15504
+ Chemical potential        (res.)  :     -6.12216
+  ***** Calculate block averages ************
+   number of averages            3
+ block data     1   0.000000   0.000000   0.000000
+ block data     2   0.000000   0.000000   0.000000
+ block data     3   0.000000   0.000000   0.000000
+ block data     4   0.000000   0.000000   0.000000
+ block data     5  -1.324472   0.002104   0.002400
+ block data     6  -1.324472   0.002104   0.002400
+ block data     7  -1.324472   0.002104   0.002400
+ block data     8   0.000000   0.000000   0.000000
+ block data     9  -1.324472   0.002104   0.002400
+ block data    10   0.000000   0.000000   0.000000
+ block data    11  -1.324472   0.002104   0.002400
+ block data    12  -3.314711   0.008303   0.009600
+ block data    13  -1.324472   0.002104   0.002400
+ block data    14   0.000000   0.000000   0.000000
+ block data    15   0.000000   0.000000   0.000000
+ block data    16  -1.324472   0.002104   0.002400
+ block data    17   0.000000   0.000000   0.000000
+ block data    18   0.000000   0.000000   0.000000
+ block data    19   0.000000   0.000000   0.000000
+ block data    20   0.000000   0.000000   0.000000
+ ###### energy       -0.62930089         0.42789033
+ ###### press         0.00115146         0.00080078
+ ###### dens          0.00132000         0.00092135
+   number of blocks          100
+         0   0.1923   0.0137   0.0004   0.0000   0.0004   0.0000
+         1   0.2056   0.0208   0.0004   0.0000   0.0004   0.0000
+         2   0.2307   0.0333   0.0005   0.0001   0.0005   0.0001
+         3   0.2004   0.0427   0.0004   0.0001   0.0005   0.0001
+         4   0.2531   0.0800   0.0005   0.0002   0.0006   0.0002
+         5   0.1505   0.0753   0.0004   0.0002   0.0005   0.0002
+ --- pid 0.005 
+At line 65 of file readdat.f (unit = 25, file = 'fort.25')
+Fortran runtime error: End of file
+
+Error termination. Backtrace:
+#0  0x742044423e59 in ???
+#1  0x742044424a71 in ???
+#2  0x7420446bb6c3 in ???
+#3  0x7420446bf7e7 in ???
+#4  0x7420446bf8f5 in ???
+#5  0x5ce8914700f0 in readdat_
+#6  0x5ce89146e97f in MAIN__
+#7  0x5ce89146f2be in main
+ **************** MC_GRAND ***************
+  ***** Calculate block averages ************
+   number of averages            3
+ block data     1   0.000000   0.000000   0.000000
+ block data     2   0.000000   0.000000   0.000000
+ block data     3   0.000000   0.000000   0.000000
+ block data     4   0.000000   0.000000   0.000000
+ block data     5  -1.324472   0.002104   0.002400
+ block data     6  -1.324472   0.002104   0.002400
+ block data     7  -1.324472   0.002104   0.002400
+ block data     8   0.000000   0.000000   0.000000
+ block data     9  -1.324472   0.002104   0.002400
+ block data    10   0.000000   0.000000   0.000000
+ block data    11  -1.324472   0.002104   0.002400
+ block data    12  -3.314711   0.008303   0.009600
+ block data    13  -1.324472   0.002104   0.002400
+ block data    14   0.000000   0.000000   0.000000
+ block data    15   0.000000   0.000000   0.000000
+ block data    16  -1.324472   0.002104   0.002400
+ block data    17   0.000000   0.000000   0.000000
+ block data    18   0.000000   0.000000   0.000000
+ block data    19   0.000000   0.000000   0.000000
+ block data    20   0.000000   0.000000   0.000000
+ ###### energy       -0.62930089         0.42789033
+ ###### press         0.00115146         0.00080078
+ ###### dens          0.00132000         0.00092135
+   number of blocks          100
+         0   0.1923   0.0137   0.0004   0.0000   0.0004   0.0000
+         1   0.2056   0.0208   0.0004   0.0000   0.0004   0.0000
+         2   0.2307   0.0333   0.0005   0.0001   0.0005   0.0001
+         3   0.2004   0.0427   0.0004   0.0001   0.0005   0.0001
+         4   0.2531   0.0800   0.0005   0.0002   0.0006   0.0002
+         5   0.1505   0.0753   0.0004   0.0002   0.0005   0.0002
+ --- pid 0.01 
+At line 65 of file readdat.f (unit = 25, file = 'fort.25')
+Fortran runtime error: End of file
+
+Error termination. Backtrace:
+#0  0x7606f2423e59 in ???
+#1  0x7606f2424a71 in ???
+#2  0x7606f26bb6c3 in ???
+#3  0x7606f26bf7e7 in ???
+#4  0x7606f26bf8f5 in ???
+#5  0x5a0eda3900f0 in readdat_
+#6  0x5a0eda38e97f in MAIN__
+#7  0x5a0eda38f2be in main
+ **************** MC_GRAND ***************
+  ***** Calculate block averages ************
+   number of averages            3
+ block data     1   0.000000   0.000000   0.000000
+ block data     2   0.000000   0.000000   0.000000
+ block data     3   0.000000   0.000000   0.000000
+ block data     4   0.000000   0.000000   0.000000
+ block data     5  -1.324472   0.002104   0.002400
+ block data     6  -1.324472   0.002104   0.002400
+ block data     7  -1.324472   0.002104   0.002400
+ block data     8   0.000000   0.000000   0.000000
+ block data     9  -1.324472   0.002104   0.002400
+ block data    10   0.000000   0.000000   0.000000
+ block data    11  -1.324472   0.002104   0.002400
+ block data    12  -3.314711   0.008303   0.009600
+ block data    13  -1.324472   0.002104   0.002400
+ block data    14   0.000000   0.000000   0.000000
+ block data    15   0.000000   0.000000   0.000000
+ block data    16  -1.324472   0.002104   0.002400
+ block data    17   0.000000   0.000000   0.000000
+ block data    18   0.000000   0.000000   0.000000
+ block data    19   0.000000   0.000000   0.000000
+ block data    20   0.000000   0.000000   0.000000
+ ###### energy       -0.62930089         0.42789033
+ ###### press         0.00115146         0.00080078
+ ###### dens          0.00132000         0.00092135
+   number of blocks          100
+         0   0.1923   0.0137   0.0004   0.0000   0.0004   0.0000
+         1   0.2056   0.0208   0.0004   0.0000   0.0004   0.0000
+         2   0.2307   0.0333   0.0005   0.0001   0.0005   0.0001
+         3   0.2004   0.0427   0.0004   0.0001   0.0005   0.0001
+         4   0.2531   0.0800   0.0005   0.0002   0.0006   0.0002
+         5   0.1505   0.0753   0.0004   0.0002   0.0005   0.0002
+ --- pid 0.05 
+At line 65 of file readdat.f (unit = 25, file = 'fort.25')
+Fortran runtime error: End of file
+
+Error termination. Backtrace:
+#0  0x7cf7ec223e59 in ???
+#1  0x7cf7ec224a71 in ???
+#2  0x7cf7ec4bb6c3 in ???
+#3  0x7cf7ec4bf7e7 in ???
+#4  0x7cf7ec4bf8f5 in ???
+#5  0x593d4fa080f0 in readdat_
+#6  0x593d4fa0697f in MAIN__
+#7  0x593d4fa072be in main
+ **************** MC_GRAND ***************
+  ***** Calculate block averages ************
+   number of averages            3
+ block data     1   0.000000   0.000000   0.000000
+ block data     2   0.000000   0.000000   0.000000
+ block data     3   0.000000   0.000000   0.000000
+ block data     4   0.000000   0.000000   0.000000
+ block data     5  -1.324472   0.002104   0.002400
+ block data     6  -1.324472   0.002104   0.002400
+ block data     7  -1.324472   0.002104   0.002400
+ block data     8   0.000000   0.000000   0.000000
+ block data     9  -1.324472   0.002104   0.002400
+ block data    10   0.000000   0.000000   0.000000
+ block data    11  -1.324472   0.002104   0.002400
+ block data    12  -3.314711   0.008303   0.009600
+ block data    13  -1.324472   0.002104   0.002400
+ block data    14   0.000000   0.000000   0.000000
+ block data    15   0.000000   0.000000   0.000000
+ block data    16  -1.324472   0.002104   0.002400
+ block data    17   0.000000   0.000000   0.000000
+ block data    18   0.000000   0.000000   0.000000
+ block data    19   0.000000   0.000000   0.000000
+ block data    20   0.000000   0.000000   0.000000
+ ###### energy       -0.62930089         0.42789033
+ ###### press         0.00115146         0.00080078
+ ###### dens          0.00132000         0.00092135
+   number of blocks          100
+         0   0.1923   0.0137   0.0004   0.0000   0.0004   0.0000
+         1   0.2056   0.0208   0.0004   0.0000   0.0004   0.0000
+         2   0.2307   0.0333   0.0005   0.0001   0.0005   0.0001
+         3   0.2004   0.0427   0.0004   0.0001   0.0005   0.0001
+         4   0.2531   0.0800   0.0005   0.0002   0.0006   0.0002
+         5   0.1505   0.0753   0.0004   0.0002   0.0005   0.0002
+ --- pid 0.1 
+At line 65 of file readdat.f (unit = 25, file = 'fort.25')
+Fortran runtime error: End of file
+
+Error termination. Backtrace:
+#0  0x7475b7c23e59 in ???
+#1  0x7475b7c24a71 in ???
+#2  0x7475b7ebb6c3 in ???
+#3  0x7475b7ebf7e7 in ???
+#4  0x7475b7ebf8f5 in ???
+#5  0x55f44e7830f0 in readdat_
+#6  0x55f44e78197f in MAIN__
+#7  0x55f44e7822be in main
+ **************** MC_GRAND ***************
+  ***** Calculate block averages ************
+   number of averages            3
+ block data     1   0.000000   0.000000   0.000000
+ block data     2   0.000000   0.000000   0.000000
+ block data     3   0.000000   0.000000   0.000000
+ block data     4   0.000000   0.000000   0.000000
+ block data     5  -1.324472   0.002104   0.002400
+ block data     6  -1.324472   0.002104   0.002400
+ block data     7  -1.324472   0.002104   0.002400
+ block data     8   0.000000   0.000000   0.000000
+ block data     9  -1.324472   0.002104   0.002400
+ block data    10   0.000000   0.000000   0.000000
+ block data    11  -1.324472   0.002104   0.002400
+ block data    12  -3.314711   0.008303   0.009600
+ block data    13  -1.324472   0.002104   0.002400
+ block data    14   0.000000   0.000000   0.000000
+ block data    15   0.000000   0.000000   0.000000
+ block data    16  -1.324472   0.002104   0.002400
+ block data    17   0.000000   0.000000   0.000000
+ block data    18   0.000000   0.000000   0.000000
+ block data    19   0.000000   0.000000   0.000000
+ block data    20   0.000000   0.000000   0.000000
+ ###### energy       -0.62930089         0.42789033
+ ###### press         0.00115146         0.00080078
+ ###### dens          0.00132000         0.00092135
+   number of blocks          100
+         0   0.1923   0.0137   0.0004   0.0000   0.0004   0.0000
+         1   0.2056   0.0208   0.0004   0.0000   0.0004   0.0000
+         2   0.2307   0.0333   0.0005   0.0001   0.0005   0.0001
+         3   0.2004   0.0427   0.0004   0.0001   0.0005   0.0001
+         4   0.2531   0.0800   0.0005   0.0002   0.0006   0.0002
+         5   0.1505   0.0753   0.0004   0.0002   0.0005   0.0002
+ --- pid 0.5 
+At line 65 of file readdat.f (unit = 25, file = 'fort.25')
+Fortran runtime error: End of file
+
+Error termination. Backtrace:
+#0  0x70262d023e59 in ???
+#1  0x70262d024a71 in ???
+#2  0x70262d2bb6c3 in ???
+#3  0x70262d2bf7e7 in ???
+#4  0x70262d2bf8f5 in ???
+#5  0x649067b0c0f0 in readdat_
+#6  0x649067b0a97f in MAIN__
+#7  0x649067b0b2be in main
+ **************** MC_GRAND ***************
+  ***** Calculate block averages ************
+   number of averages            3
+ block data     1   0.000000   0.000000   0.000000
+ block data     2   0.000000   0.000000   0.000000
+ block data     3   0.000000   0.000000   0.000000
+ block data     4   0.000000   0.000000   0.000000
+ block data     5  -1.324472   0.002104   0.002400
+ block data     6  -1.324472   0.002104   0.002400
+ block data     7  -1.324472   0.002104   0.002400
+ block data     8   0.000000   0.000000   0.000000
+ block data     9  -1.324472   0.002104   0.002400
+ block data    10   0.000000   0.000000   0.000000
+ block data    11  -1.324472   0.002104   0.002400
+ block data    12  -3.314711   0.008303   0.009600
+ block data    13  -1.324472   0.002104   0.002400
+ block data    14   0.000000   0.000000   0.000000
+ block data    15   0.000000   0.000000   0.000000
+ block data    16  -1.324472   0.002104   0.002400
+ block data    17   0.000000   0.000000   0.000000
+ block data    18   0.000000   0.000000   0.000000
+ block data    19   0.000000   0.000000   0.000000
+ block data    20   0.000000   0.000000   0.000000
+ ###### energy       -0.62930089         0.42789033
+ ###### press         0.00115146         0.00080078
+ ###### dens          0.00132000         0.00092135
+   number of blocks          100
+         0   0.1923   0.0137   0.0004   0.0000   0.0004   0.0000
+         1   0.2056   0.0208   0.0004   0.0000   0.0004   0.0000
+         2   0.2307   0.0333   0.0005   0.0001   0.0005   0.0001
+         3   0.2004   0.0427   0.0004   0.0001   0.0005   0.0001
+         4   0.2531   0.0800   0.0005   0.0002   0.0006   0.0002
+         5   0.1505   0.0753   0.0004   0.0002   0.0005   0.0002

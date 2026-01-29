@@ -1,0 +1,151 @@
+#!/bin/csh -f
+#
+# run_isotherm
+# ------------
+# This script runs the GCMC simulation multiple times at different PID values
+# to generate an adsorption isotherm (density vs chemical potential)
+#
+# How to use:
+#   1. Edit the parameters below
+#   2. Run: ./run_isotherm
+#   3. Plot: python3 plot_isotherm.py <output_folder>/isotherm_summary.dat
+#
+
+# ---- PARAMETERS to CHANGE ----
+
+set SLITWIDTH = 5.0      # distance between walls (sigma)
+set TEMP = 0.9           # temperature (T* = T/(eps/kB))
+set RHO_INIT = 0.6       # starting density (system equilibrates)
+set NPART = 50           # starting number of particles
+set EQUIL = 200          # equilibration cycles 
+set PROD = 2000           # production cycles (measurements happen here)
+set NSAMP = 2            # measure every this many cycles
+set RC = 2.5             # cutoff radius (should be < SLITWIDTH/2)
+
+# PID values to loop through
+# PID controls the chemical potential of the reservoir
+# higher PID = more particles want to come in = higher density
+# these values give a nice range from gas-like to liquid-like
+set PID_VALUES = (0.01 0.02 0.05 0.1 0.2 0.5 1.0)
+
+# ---- CREATE OUTPUT FOLDER ----
+# Timestamp present to make distinguishing a bit easier (for myself it helps a lot)
+# Format: isotherm_L5.0_T0.9_20250129_143022
+set TIMESTAMP = `date +%Y%m%d_%H%M%S`
+set OUTDIR = "isotherm_L${SLITWIDTH}_T${TEMP}_${TIMESTAMP}"
+
+mkdir -p $OUTDIR
+echo ""
+echo "Output folder: $OUTDIR"
+echo ""
+
+# Save what parameters you used (to remember later)
+# The << EOF ... EOF thing is called a "here document"
+# It lets me write multiple lines to a file without using echo for each line
+# Everything between << EOF and EOF goes into the file
+cat > $OUTDIR/config.txt << EOF
+Run date: `date`
+SLITWIDTH = $SLITWIDTH
+TEMP = $TEMP
+RHO_INIT = $RHO_INIT
+NPART = $NPART
+EQUIL = $EQUIL
+PROD = $PROD
+RC = $RC
+PID_VALUES = $PID_VALUES
+EOF
+
+# Create the summary file with a header line
+# This file will have one line per PID value: pid, density, error, etc
+# The # at the start makes python skip it when reading data
+echo "# PID  Density  Dens_err  Energy  En_err  Pressure  Pr_err" > $OUTDIR/isotherm_summary.dat
+
+
+# ---- COPY MODEL FILE ----
+# fort.25 is the LJ parameters file
+# we copy it ONCE here, not inside the loop
+# the old script had "rm fort.*" which deleted this file - thats why it crashed!
+cp lj.model fort.25
+
+
+# ---- MAIN LOOP ----
+# foreach is like a for loop in python
+# it goes through each value in the list one by one
+foreach pid ($PID_VALUES)
+
+    echo "Running PID = $pid ..."
+    
+    # Create input file for this run
+    # fort.15 is where the fortran code reads its parameters
+    # ${pid} gets replaced with the actual value (0.01, 0.02, etc)
+    cat > fort.15 << endofdata
+  ibeg  , nequil  , lmax   nsamp iseed
+   0      $EQUIL      $PROD   $NSAMP      68324
+  dr      
+  0.09   
+  ndispl  nexch
+  100      10
+npart temp rho      pid
+$NPART     $TEMP $RHO_INIT    $pid
+slitwidth
+$SLITWIDTH
+rv
+$RC 
+endofdata
+
+    # Copy starting configuration
+    cp lj.res fort.11
+    
+    # Run the simulation
+    # > redirects output to a file instead of printing to screen
+    ../Source/mc_grand > $OUTDIR/out_pid_${pid}.txt
+    
+    # Save results with PID in the filename
+    # -e checks if file exists
+    if (-e fort.21) then
+        cp fort.21 $OUTDIR/res_pid_${pid}.dat
+        cp fort.21 lj.res
+    endif
+    
+    if (-e fort.66) then
+        # move the time series data
+        mv fort.66 $OUTDIR/prt_pid_${pid}.dat
+        
+        # Calculate average density from the data
+        # awk reads the file line by line
+        # $4 means "fourth column" (density is column 4)
+        # this adds up all values and divides by count
+        set DENSITY = `awk '{sum+=$4; n++} END {print sum/n}' $OUTDIR/prt_pid_${pid}.dat`
+        set ENERGY = `awk '{sum+=$2; n++} END {print sum/n}' $OUTDIR/prt_pid_${pid}.dat`
+        set PRESSURE = `awk '{sum+=$3; n++} END {print sum/n}' $OUTDIR/prt_pid_${pid}.dat`
+        
+        # Calculate standard deviation (error estimate)
+        set DENS_ERR = `awk -v m=$DENSITY '{s+=($4-m)^2; n++} END {print sqrt(s/(n-1))}' $OUTDIR/prt_pid_${pid}.dat`
+        set EN_ERR = `awk -v m=$ENERGY '{s+=($2-m)^2; n++} END {print sqrt(s/(n-1))}' $OUTDIR/prt_pid_${pid}.dat`
+        set PR_ERR = `awk -v m=$PRESSURE '{s+=($3-m)^2; n++} END {print sqrt(s/(n-1))}' $OUTDIR/prt_pid_${pid}.dat`
+        
+        # Add this data point to summary file
+        echo "$pid  $DENSITY  $DENS_ERR  $ENERGY  $EN_ERR  $PRESSURE  $PR_ERR" >> $OUTDIR/isotherm_summary.dat
+        
+        echo "  -> density = $DENSITY"
+    else
+        echo "  -> WARNING: simulation failed, no output"
+        echo "$pid  0.0  0.0  0.0  0.0  0.0  0.0" >> $OUTDIR/isotherm_summary.dat
+    endif
+    
+    # Clean up temp files for this run
+    # NOTE: we list specific files, NOT "rm fort.*" which would delete fort.25 (it did for me in my earlier attemtps.......)
+    rm -f fort.11 fort.15 fort.21 fort.31 fort.32 fort.66
+
+end
+# end of foreach loop
+
+# Final cleanup
+rm -f fort.25
+
+echo ""
+echo "Done, Results in: $OUTDIR/"
+echo "To plot -> python3 plot_isotherm.py $OUTDIR/isotherm_summary.dat"
+echo ""
+
+exit
