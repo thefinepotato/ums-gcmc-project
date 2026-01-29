@@ -1,4 +1,6 @@
-COMPFLAGS     = -O # -check_bounds  -g -trapeuv
+#COMPFLAGS     = -O # -check_bounds  -g -trapeuv
+COMPFLAGS = -O -fbounds-check #Now its checking bounds but also doing an array bound checking
+#IF array is out of bounds it will crash with a clear message instead of giving an output
 
 CFLAGS	      = $(COMPFLAGS)
 PFLAGS	      = $(COMPFLAGS)

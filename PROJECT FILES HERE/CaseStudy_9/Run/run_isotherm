@@ -18,7 +18,7 @@ set TEMP = 0.9           # temperature (T* = T/(eps/kB))
 set RHO_INIT = 0.6       # starting density (system equilibrates)
 set NPART = 50           # starting number of particles
 set EQUIL = 200          # equilibration cycles 
-set PROD = 2000           # production cycles (measurements happen here)
+set PROD = 20000           # production cycles (measurements happen here)
 set NSAMP = 2            # measure every this many cycles
 set RC = 2.5             # cutoff radius (should be < SLITWIDTH/2)
 
@@ -80,7 +80,7 @@ foreach pid ($PID_VALUES)
     # ${pid} gets replaced with the actual value (0.01, 0.02, etc)
     cat > fort.15 << endofdata
   ibeg  , nequil  , lmax   nsamp iseed
-   0      $EQUIL      $PROD   $NSAMP      68324
+   0      $EQUIL      $PROD   $NSAMP      time()
   dr      
   0.09   
   ndispl  nexch
@@ -120,9 +120,9 @@ endofdata
         set PRESSURE = `awk '{sum+=$3; n++} END {print sum/n}' $OUTDIR/prt_pid_${pid}.dat`
         
         # Calculate standard deviation (error estimate)
-        set DENS_ERR = `awk -v m=$DENSITY '{s+=($4-m)^2; n++} END {print sqrt(s/(n-1))}' $OUTDIR/prt_pid_${pid}.dat`
-        set EN_ERR = `awk -v m=$ENERGY '{s+=($2-m)^2; n++} END {print sqrt(s/(n-1))}' $OUTDIR/prt_pid_${pid}.dat`
-        set PR_ERR = `awk -v m=$PRESSURE '{s+=($3-m)^2; n++} END {print sqrt(s/(n-1))}' $OUTDIR/prt_pid_${pid}.dat`
+        set DENS_ERR = `awk -v m=$DENSITY '{s+=($4-m)^2; n++} END {print sqrt(s/(n-1))/sqrt(n)}' $OUTDIR/prt_pid_${pid}.dat`
+        set EN_ERR = `awk -v m=$ENERGY '{s+=($2-m)^2; n++} END {print sqrt(s/(n-1))/sqrt(n)}' $OUTDIR/prt_pid_${pid}.dat`
+        set PR_ERR = `awk -v m=$PRESSURE '{s+=($3-m)^2; n++} END {print sqrt(s/(n-1))/sqrt(n)}' $OUTDIR/prt_pid_${pid}.dat`
         
         # Add this data point to summary file
         echo "$pid  $DENSITY  $DENS_ERR  $ENERGY  $EN_ERR  $PRESSURE  $PR_ERR" >> $OUTDIR/isotherm_summary.dat
