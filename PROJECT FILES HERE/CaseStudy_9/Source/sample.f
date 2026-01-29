@@ -12,7 +12,9 @@ c     writes quantities to file
  
       IF (NPART.NE.0) THEN
          enp = En/DBLE(NPART)
-         vol = BOX**3
+c         vol = BOX**3
+c        fixing vol calc to include slit width
+         vol = BOX*BOX*SLITWIDTH
          rho = NPART/vol
          press = rho/BETA + Vir/(3.D0*vol)
          IF (TAILCO) press = press + CORP(RC, rho)
