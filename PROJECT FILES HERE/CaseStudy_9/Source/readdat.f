@@ -2,7 +2,9 @@
       SUBROUTINE READDAT(Equil, Prod, Nsamp, Ndispl, Dr, Nexch, Iseed)
 c
 C     reads input data and model parameters
+c     the subroutine readdat defines the function, and its input output arguments
 c
+c     subroutines are basically like functions from python
       IMPLICIT NONE
       INCLUDE 'parameter.inc'
       INCLUDE 'system.inc'
@@ -13,6 +15,10 @@ c
       DOUBLE PRECISION eps, sig, CORU, CORP, vir, rho, Dr, pid
  
  
+c     IMPLICIT NONE is a safety feature that forces the programmer to declare EVERY vvariable explicitly
+c     avoiding the hidden variable bugs
+c     INCLUDE system.inc is pulling the global variables
+c     integer/double precision lists the types of local vvvariables used integers/decimels
 c     ---read simulation data
 c
 c input parameters
@@ -42,7 +48,18 @@ c
          WRITE (6, *) ' ERROR: number of particles too large'
          STOP
       END IF
-      BOX = (NPART/rho)**(1.D00/3.D00)
+c     original code: BOX = (NPART/rho)**(1.D00/3.D00)
+c     BOX is the L of the box, NPART -> N and rho =  density so V = N/rho basically
+c     it is to the power of 1/3 which is cus this is a 3D system so V = L^3; 
+c     D00 is used to force the code into double precision so you can use many decimals vs default int
+c     ADDING NEW CODE BELOW
+c     ---Read slit width (after reading NPART, TEMP, rho, pid)
+      READ (15, *)
+      READ (15, *) SLITWIDTH
+
+c     --For slit pore: rho = density = N/V = Number ofParticles/Volume = N/(L^2 * W)
+c     --L = sqrt(N/(rho*W))
+      BOX = SQRT(NPART/rho*SLITWIDTH)
       HBOX = 0.5D00*BOX
 c     ---read model parameters
       READ (25, *)
