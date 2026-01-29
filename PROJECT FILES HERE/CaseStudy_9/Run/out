@@ -244,3 +244,126 @@ Note: The following floating-point exceptions are signalling: IEEE_UNDERFLOW_FLA
          3   0.0157   0.0033   0.0677   0.0144   0.0029   0.0006
          4   0.0190   0.0060   0.0920   0.0291   0.0042   0.0013
          5   0.0198   0.0099   0.1307   0.0653   0.0060   0.0030
+ --- pid 0.016 
+Note: The following floating-point exceptions are signalling: IEEE_UNDERFLOW_FLAG IEEE_DENORMAL
+ **************** MC_GRAND ***************
+ Initialisation on lattice: 
+        50 particles placed on a lattice
+  Number of equilibration cycles             :       100
+  Number of production cycles                :       200
+  Sample frequency                           :         2
+
+  Number of att. to displ. a part. per cycle :       100
+  Maximum displacement                       :     0.090
+  Number of att. to exchange part. per cycle :        10
+
+
+  Number of particles                        :        50
+  Temperature                                :     0.900
+  Ideal gas pressure reservoir               :     0.016
+  Density                                    :     0.600
+  Box length                                 :     4.368
+
+  Model parameters: 
+     epsilon: 1.000
+     sigma  : 1.000
+     mass   : 1.000
+ Simulations with tail correction: 
+ Potential truncated at  Rc =:     2.184
+ Tail corrections:   energy =     -0.481 pressure     -0.576
+
+
+  ******** test random numbers ***********
+  i,ranf()            1  0.85927803648331647     
+  i,ranf()            2  0.11043871012919715     
+  i,ranf()            3  0.37343370330170500     
+  i,ranf()            4  0.49441680255004172     
+  i,ranf()            5  0.31954203284198734     
+ Total energy initial configuration:   -233.04008
+ Total virial initial configuration:   -110.35410
+  Start equilibration 
+ ======>> Done           20  out of          100          55
+ Max. displ. set to :  0.135 (old :  0.090)
+ Frac. acc.: 0.76 attempts:    1993 succes:    1523
+ ======>> Done           40  out of          100          56
+ Max. displ. set to :  0.181 (old :  0.135)
+ Frac. acc.: 0.67 attempts:    2003 succes:    1343
+ ======>> Done           60  out of          100          56
+ Max. displ. set to :  0.222 (old :  0.181)
+ Frac. acc.: 0.61 attempts:    2012 succes:    1231
+ ======>> Done           80  out of          100          56
+ Max. displ. set to :  0.235 (old :  0.222)
+ Frac. acc.: 0.53 attempts:    1998 succes:    1059
+ ======>> Done          100  out of          100          58
+ Max. displ. set to :  0.245 (old :  0.235)
+ Frac. acc.: 0.52 attempts:    1988 succes:    1037
+ Number of att. to displ. a part.  :       9994
+ success:       6193(= 61.97%)
+ Number of att. to exch. part      :       1006
+ success:         16(=  1.59%)
+ Total energy end of simulation    :   -289.82993
+       running energy              :   -289.82993
+       difference                  :   0.28422E-12
+ Total virial end of simulation    :   -193.20572
+       running virial              :   -193.20572
+       difference                  :   0.28422E-13
+  Start production 
+ ======>> Done           40  out of          200          60
+ Max. displ. set to :  0.249 (old :  0.245)
+ Frac. acc.: 0.51 attempts:    3976 succes:    2019
+ ======>> Done           80  out of          200          60
+ Max. displ. set to :  0.236 (old :  0.249)
+ Frac. acc.: 0.47 attempts:    4004 succes:    1900
+ ======>> Done          120  out of          200          60
+ Max. displ. set to :  0.233 (old :  0.236)
+ Frac. acc.: 0.49 attempts:    4014 succes:    1984
+ ======>> Done          160  out of          200          61
+ Max. displ. set to :  0.220 (old :  0.233)
+ Frac. acc.: 0.47 attempts:    4000 succes:    1886
+ ======>> Done          200  out of          200          61
+ Max. displ. set to :  0.225 (old :  0.220)
+ Frac. acc.: 0.51 attempts:    4016 succes:    2049
+ Number of att. to displ. a part.  :      20010
+ success:       9838(= 49.17%)
+ Number of att. to exch. part      :       1990
+ success:          3(=  0.15%)
+ Total energy end of simulation    :   -313.54894
+       running energy              :   -313.54894
+       difference                  :   0.79581E-12
+ Total virial end of simulation    :     61.45316
+       running virial              :     61.45316
+       difference                  :   0.17693E-11
+ Excess chemical potential (res.)  :     -3.33282
+ Chemical potential        (res.)  :     -3.62683
+  ***** Calculate block averages ************
+   number of averages            3
+ block data     1  -4.924520  -0.634284   0.696000
+ block data     2  -5.035257  -0.679595   0.708000
+ block data     3  -5.014625  -0.407201   0.708000
+ block data     4  -5.095644  -0.770356   0.710400
+ block data     5  -5.123060  -0.490565   0.720000
+ block data     6  -5.059924  -0.368704   0.720000
+ block data     7  -5.124639  -0.488902   0.720000
+ block data     8  -5.113270  -0.432589   0.720000
+ block data     9  -5.090128  -0.340076   0.720000
+ block data    10  -5.134122  -0.366352   0.720000
+ block data    11  -5.097197  -0.243312   0.720000
+ block data    12  -5.036291   0.064624   0.720000
+ block data    13  -5.104470  -0.185566   0.720000
+ block data    14  -5.120352  -0.035954   0.732000
+ block data    15  -5.117575  -0.127638   0.732000
+ block data    16  -5.038561   0.172979   0.732000
+ block data    17  -5.061633   0.046373   0.732000
+ block data    18  -5.136312  -0.274382   0.732000
+ block data    19  -5.190109  -0.441460   0.732000
+ block data    20  -5.078631   0.238223   0.732000
+ ###### energy       -5.08481604         0.02094536
+ ###### press        -0.28823696         0.09882408
+ ###### dens          0.72132001         0.00220927
+   number of blocks          100
+         0   0.0094   0.0007   0.0444   0.0032   0.0010   0.0001
+         1   0.0116   0.0012   0.0563   0.0057   0.0014   0.0001
+         2   0.0135   0.0019   0.0649   0.0094   0.0020   0.0003
+         3   0.0157   0.0033   0.0677   0.0144   0.0029   0.0006
+         4   0.0190   0.0060   0.0920   0.0291   0.0042   0.0013
+         5   0.0198   0.0099   0.1307   0.0653   0.0060   0.0030
