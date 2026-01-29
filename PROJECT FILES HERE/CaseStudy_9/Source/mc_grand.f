@@ -59,7 +59,9 @@ c              ---sample averages
                   CALL SAMPLE(icycl, en, vir)
 c                   ---to determine exess chem. potential
                   nsampav = nsampav + 1
-                  rhoav = rhoav + NPART/(BOX*BOX*BOX)
+c                  fix vol calc for density average from bulk to slit pore                  
+c                  rhoav = rhoav + NPART/(BOX*BOX*BOX)
+                  rhoav = rhoav + NPART/(BOX*BOX*SLITWIDTH)
                END IF
             END IF
             IF (MOD(icycl,ncycl/5).EQ.0) THEN
