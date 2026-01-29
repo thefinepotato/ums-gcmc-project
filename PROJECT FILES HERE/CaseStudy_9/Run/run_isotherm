@@ -22,6 +22,9 @@ set PROD = 20000           # production cycles (measurements happen here)
 set NSAMP = 2            # measure every this many cycles
 set RC = 2.5             # cutoff radius (should be < SLITWIDTH/2)
 
+
+
+
 # PID values to loop through
 # PID controls the chemical potential of the reservoir
 # higher PID = more particles want to come in = higher density
@@ -61,14 +64,26 @@ EOF
 echo "# PID  Density  Dens_err  Energy  En_err  Pressure  Pr_err" > $OUTDIR/isotherm_summary.dat
 
 
-# ---- COPY MODEL FILE ----
+# COPY MODEL FILE 
 # fort.25 is the LJ parameters file
 # we copy it ONCE here, not inside the loop
 # the old script had "rm fort.*" which deleted this file - thats why it crashed!
 cp lj.model fort.25
 
+# RECOMPILE SOURCE 
+echo "Compiling..."
+cd ../Source
+make clean >& /dev/null
+make >& /dev/null
+if ($status != 0) then
+    echo "ERROR: Compilation failed!"
+    exit 1
+endif
+cd ../Run
+echo "Compilation done."
+echo ""
 
-# ---- MAIN LOOP ----
+# MAIN LOOP
 # foreach is like a for loop in python
 # it goes through each value in the list one by one
 foreach pid ($PID_VALUES)
@@ -80,7 +95,7 @@ foreach pid ($PID_VALUES)
     # ${pid} gets replaced with the actual value (0.01, 0.02, etc)
     cat > fort.15 << endofdata
   ibeg  , nequil  , lmax   nsamp iseed
-   0      $EQUIL      $PROD   $NSAMP      time()
+   0      $EQUIL      $PROD   $NSAMP      `date +%S%M%H`
   dr      
   0.09   
   ndispl  nexch
