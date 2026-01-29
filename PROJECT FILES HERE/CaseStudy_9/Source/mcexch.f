@@ -17,14 +17,19 @@ c
       INTEGER o, Attempt, Nacc, jb, Iseed
  
       Attempt = Attempt + 1
-      vol = BOX*BOX*BOX
+c     BELOW is outdated vol calc for bulk      
+c     vol = BOX*BOX*BOX
+c     NEW vol calc for slitpore
+      vol = BOX*BOX*SLITWIDTH
       rhoo = NPART/vol
 c     ---select to add of delete a particle
       IF (RANF(Iseed).LE.0.5D0) THEN
 c        ---add a particle at a random position
          xn = RANF(Iseed)*BOX
          yn = RANF(Iseed)*BOX
-         zn = RANF(Iseed)*BOX
+c        Z needs to now insert with slitwidth in mind, if you sert with [0,BOX] then particle can be outside the slit and youre wasting trials
+c        zn = RANF(Iseed)*BOX
+         zn = RANF(Iseed)*SLITWIDTH
          o = NPART + 1
          jb = 1
 c        ---determine energy of this particle
