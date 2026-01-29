@@ -1,7 +1,7 @@
 **==lattice.spg  processed by SPAG 4.52O  at 18:49 on  6 Jun 1996
  
       SUBROUTINE LATTICE
-c     ---place `npart' particles on a lattice with density 'rho'
+c     ---place `npart' particles on a lattice with density 'rho'; This code modified for slitwidth
       IMPLICIT NONE
       INCLUDE 'parameter.inc'
       INCLUDE 'conf.inc'
@@ -25,7 +25,10 @@ c     ---place `npart' particles on a lattice with density 'rho'
             dz = -del
             DO k = 1, n
                dz = dz + del
-               IF (dz.GT.BOX) dz = dz - BOX
+c               Change lattice init where z wraps around slitwidth instead of box
+c               NOTE lattice --> EVERY particle needs to be valid, mcmove is where acceptance rule comes into play
+c               IF (dz.GT.BOX) dz = dz - BOX
+               IF (dz.GT.SLITWIDTH) dz = dz - SLITWIDTH
                IF (itel.LT.NPART) THEN
                   itel = itel + 1
                   X(itel) = dx
