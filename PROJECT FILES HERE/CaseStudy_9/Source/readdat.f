@@ -59,7 +59,7 @@ c     ---Read slit width (after reading NPART, TEMP, rho, pid)
 
 c     --For slit pore: rho = density = N/V = Number ofParticles/Volume = N/(L^2 * W)
 c     --L = sqrt(N/(rho*W))
-      BOX = SQRT(NPART/rho*SLITWIDTH)
+      BOX = SQRT(NPART/(rho*SLITWIDTH))
       HBOX = 0.5D00*BOX
 c     ---read model parameters
       READ (25, *)

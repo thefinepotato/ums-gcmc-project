@@ -24,7 +24,7 @@ c     ---give particle a random displacement
 
 c     --slit pore check for wall potential 
 c     --if z outside of the range 0:slitwidth then U_wall = infinte, reject
-      IF (zn.LT.0.D0) .OR. zn.GT.SLITWIDTH RETURN
+      IF (zn.LT.0.D0 .OR. zn.GT.SLITWIDTH) RETURN
 c     ---calculate energy new configuration:
       CALL ENERI(xn, yn, zn, o, jb, enn, virn)
 c     ---acceptance test

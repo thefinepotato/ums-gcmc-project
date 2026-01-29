@@ -26,11 +26,12 @@ c           ---minimum immage
             ELSE
                IF (dy.LT.-HBOX) dy = dy + BOX
             END IF
-            IF (dz.GT.HBOX) THEN
-               dz = dz - BOX
-            ELSE
-               IF (dz.LT.-HBOX) dz = dz + BOX
-            END IF
+c           Ending min image for z, as z is now acting as a real wall so you need direct distance            
+c            IF (dz.GT.HBOX) THEN
+c               dz = dz - BOX
+c            ELSE
+c               IF (dz.LT.-HBOX) dz = dz + BOX
+c            END IF
             r2 = dx*dx + dy*dy + dz*dz
 c           ---calculate energy and virial pair i,j
             CALL ENER(enij, virij, r2)
