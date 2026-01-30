@@ -1,0 +1,317 @@
+#!/bin/csh -f
+#
+# run_isotherm_v1
+# this runs GCMC at different PID values and makes an isotherm
+# based on frenkel & smit appendix O.1
+#
+# to use:
+#   1. change SLITWIDTH and TEMP
+#   2. ./run_isotherm_v1
+#   3. python3 plot_isotherm.py <folder>/isotherm_summary.dat
+#
+
+# ==============================================================================
+# CHANGE THESE
+# ==============================================================================
+
+set SLITWIDTH = 5.0      # slit width in sigma
+set TEMP = 0.9           # reduced temp T*
+
+# ==============================================================================
+# PROBABLY DONT NEED TO TOUCH THESE hopefullyyy its good enough now
+# ==============================================================================
+
+set RHO_INIT = 0.5       # starting density, GCMC will equilibrate anyway
+set NPART = 50           # starting particles
+set NSAMP = 2            # sample every N cycles
+set RC = 2.5             # cutoff, keep < SLITWIDTH/2
+
+# ==============================================================================
+# AUTO STUFF
+# calculates parameters based on temp
+# ==============================================================================
+
+# critical temp for truncated LJ rc=2.5
+
+set T_CRIT = 1.1
+set RHO_CRIT = 0.31
+
+# subcritical or supercritical?
+set IS_SUBCRITICAL = `echo "$TEMP < $T_CRIT" | bc -l`
+
+# ------------------------------------------------------------------------------
+# saturation pressure from clausius-clapeyron
+# fit to johnson et al data using T=0.75 and T=0.90:
+#   ln(P_sat) = 4.54 - 8.06/T
+# valid for T = 0.7 to 1.1 (subcritical)
+# ------------------------------------------------------------------------------
+
+if ($IS_SUBCRITICAL == 1) then
+    # below Tc, expect phase transition
+    
+    # P_sat calculation (bc doesnt have exp so use awk)
+    # derived from: ln(0.002)=A-B/0.75, ln(0.012)=A-B/0.90
+    set P_SAT = `echo $TEMP | awk '{print exp(4.54 - 8.06/$1)}'`
+    
+    # literature coexistence densities from johnson et al
+    # fitted to data points, not guessed!!!
+    #
+    # rho_gas: exponential fit using T=0.75,0.90
+    #   ln(rho) = 4.36 - 7.24/T
+    #   error ~10% near T=1.0, acceptable
+    #
+    # rho_liq: linear fit using T=0.75,1.00  
+    #   rho = 1.42 - 0.72*T
+    #   error ~3% at T=0.90, good
+    set RHO_GAS_LIT = `echo $TEMP | awk '{print exp(4.36 - 7.24/$1)}'`
+    set RHO_LIQ_LIT = `echo $TEMP | awk '{print 1.42 - 0.72*$1}'`
+    
+    # longer runs near transition bc metastability
+    set TC_EST = 500
+    
+    # ------------------------------------------------------------------------------
+    # PID values
+    # want dense sampling near P_sat where transition happens
+    # sparse far away where nothing interesting happens
+    # this was the main problem with the old script - missed the transition
+    # ------------------------------------------------------------------------------
+    
+    # PID as multiples of P_sat
+    set PID_MIN = `echo $P_SAT | awk '{printf "%.6f", 0.1*$1}'`
+    set PID_LO1 = `echo $P_SAT | awk '{printf "%.6f", 0.3*$1}'`
+    set PID_LO2 = `echo $P_SAT | awk '{printf "%.6f", 0.5*$1}'`
+    set PID_LO3 = `echo $P_SAT | awk '{printf "%.6f", 0.7*$1}'`
+    set PID_LO4 = `echo $P_SAT | awk '{printf "%.6f", 0.85*$1}'`
+    set PID_MID = `echo $P_SAT | awk '{printf "%.6f", 1.0*$1}'`
+    set PID_HI1 = `echo $P_SAT | awk '{printf "%.6f", 1.15*$1}'`
+    set PID_HI2 = `echo $P_SAT | awk '{printf "%.6f", 1.3*$1}'`
+    set PID_HI3 = `echo $P_SAT | awk '{printf "%.6f", 1.5*$1}'`
+    set PID_HI4 = `echo $P_SAT | awk '{printf "%.6f", 2.0*$1}'`
+    set PID_HI5 = `echo $P_SAT | awk '{printf "%.6f", 3.0*$1}'`
+    set PID_HI6 = `echo $P_SAT | awk '{printf "%.6f", 5.0*$1}'`
+    set PID_HI7 = `echo $P_SAT | awk '{printf "%.6f", 10.0*$1}'`
+    set PID_MAX = `echo $P_SAT | awk '{printf "%.6f", 50.0*$1}'`
+    
+    set PID_VALUES = ($PID_MIN $PID_LO1 $PID_LO2 $PID_LO3 $PID_LO4 $PID_MID $PID_HI1 $PID_HI2 $PID_HI3 $PID_HI4 $PID_HI5 $PID_HI6 $PID_HI7 $PID_MAX)
+    
+else
+    # above Tc, no transition, smooth and boring
+    set P_SAT = "N/A"
+    set RHO_GAS_LIT = "N/A"
+    set RHO_LIQ_LIT = "N/A"
+    set TC_EST = 50
+    
+    # higher PID needed above Tc
+    set PID_VALUES = (0.05 0.1 0.2 0.5 1.0 2.0 3.0 5.0 7.0 10.0)
+endif
+
+# EQUIL and PROD from correlation time
+# rule of thumb from F&S: EQUIL ~ 10*tc, PROD ~ 200*tc
+@ EQUIL = 10 * $TC_EST
+@ PROD = 200 * $TC_EST
+
+# ==============================================================================
+# PRINT STUFF
+# ==============================================================================
+
+echo ""
+echo "============================================================"
+echo "  GCMC Isotherm v1"
+echo "============================================================"
+echo ""
+echo "Physical parameters:"
+echo "  L* = $SLITWIDTH"
+echo "  T* = $TEMP"
+echo "  Tc* ~ $T_CRIT"
+echo ""
+
+if ($IS_SUBCRITICAL == 1) then
+    echo "SUBCRITICAL: phase transition expected"
+    echo ""
+    echo "Literature (Johnson et al 1993):"
+    echo "  P_sat* ~ $P_SAT"
+    echo "  rho_gas* ~ $RHO_GAS_LIT"
+    echo "  rho_liq* ~ $RHO_LIQ_LIT"
+    echo ""
+    echo "  -> should see density jump near PID ~ P_sat"
+else
+    echo "SUPERCRITICAL: smooth isotherm"
+endif
+
+echo ""
+echo "Simulation:"
+echo "  tc estimate: $TC_EST cycles"
+echo "  EQUIL = $EQUIL"
+echo "  PROD = $PROD"
+echo "  PID values: $PID_VALUES"
+echo ""
+echo "============================================================"
+echo ""
+
+# ==============================================================================
+# OUTPUT FOLDER
+# ==============================================================================
+
+set TIMESTAMP = `date +%Y%m%d_%H%M%S`
+set OUTDIR = "isotherm_L${SLITWIDTH}_T${TEMP}_${TIMESTAMP}"
+
+mkdir -p $OUTDIR
+echo "Output: $OUTDIR"
+echo ""
+
+# save config so i remember later what i ran
+cat > $OUTDIR/config.txt << EOF
+================================================================================
+Config - run_isotherm_v1
+================================================================================
+
+Date: `date`
+
+SLITWIDTH = $SLITWIDTH
+TEMP = $TEMP
+Tc* ~ $T_CRIT
+
+SUBCRITICAL: $IS_SUBCRITICAL
+
+Literature (Johnson et al):
+  P_sat* ~ $P_SAT
+  rho_gas* ~ $RHO_GAS_LIT  
+  rho_liq* ~ $RHO_LIQ_LIT
+
+EQUIL = $EQUIL
+PROD = $PROD
+PID = $PID_VALUES
+
+Error method: Block averaging (F&S 5.3.3)
+================================================================================
+EOF
+
+# header
+echo "# PID  Density  Dens_err  Energy  En_err  Pressure  Pr_err" > $OUTDIR/isotherm_summary.dat
+
+# ==============================================================================
+# COMPILE
+# ==============================================================================
+
+# copy model file
+# learned the hard way not to delete this later with rm fort.*
+cp lj.model fort.25
+
+echo "Compiling..."
+cd ../Source
+make clean >& /dev/null
+make >& /dev/null
+if ($status != 0) then
+    echo "ERROR: Compilation failed!"
+    exit 1
+endif
+cd ../Run
+echo "Done."
+echo ""
+
+# ==============================================================================
+# MAIN LOOP
+# ==============================================================================
+
+set NRUNS = $#PID_VALUES
+set IRUN = 0
+
+foreach pid ($PID_VALUES)
+    @ IRUN = $IRUN + 1
+    echo "[$IRUN/$NRUNS] PID = $pid ..."
+    
+    # input file
+    cat > fort.15 << endofdata
+  ibeg  , nequil  , lmax   nsamp iseed
+   0      $EQUIL      $PROD   $NSAMP      `date +%S%M%H`
+  dr      
+  0.09   
+  ndispl  nexch
+  100      10
+npart temp rho      pid
+$NPART     $TEMP $RHO_INIT    $pid
+slitwidth
+$SLITWIDTH
+rv
+$RC 
+endofdata
+
+    # starting config
+    cp lj.res fort.11
+    
+    # run
+    ../Source/mc_grand > $OUTDIR/out_pid_${pid}.txt
+    
+    # save final config
+    if (-e fort.21) then
+        cp fort.21 $OUTDIR/res_pid_${pid}.dat
+        cp fort.21 lj.res
+    endif
+    
+    # --------------------------------------------------------------------------
+    # BLOCK AVERAGING
+    # this is the right way to get error bars (F&S 5.3.3)
+    # normal SEM is wrong bc samples are correlated
+    # found out the hard way that errors were ~35x too small without this
+    # --------------------------------------------------------------------------
+    
+    if (-e fort.66) then
+        mv fort.66 $OUTDIR/prt_pid_${pid}.dat
+        
+        # block averaging
+        cp lj.prth fort.31
+        cp $OUTDIR/prt_pid_${pid}.dat fort.32
+        ../Block/block > $OUTDIR/block_pid_${pid}.txt
+        
+        # get values from ###### lines
+        set ENERGY = `grep '###### energy' $OUTDIR/block_pid_${pid}.txt | awk '{print $3}'`
+        set EN_ERR = `grep '###### energy' $OUTDIR/block_pid_${pid}.txt | awk '{print $4}'`
+        set PRESSURE = `grep '###### press' $OUTDIR/block_pid_${pid}.txt | awk '{print $3}'`
+        set PR_ERR = `grep '###### press' $OUTDIR/block_pid_${pid}.txt | awk '{print $4}'`
+        set DENSITY = `grep '###### dens' $OUTDIR/block_pid_${pid}.txt | awk '{print $3}'`
+        set DENS_ERR = `grep '###### dens' $OUTDIR/block_pid_${pid}.txt | awk '{print $4}'`
+        
+        # save
+        echo "$pid  $DENSITY  $DENS_ERR  $ENERGY  $EN_ERR  $PRESSURE  $PR_ERR" >> $OUTDIR/isotherm_summary.dat
+        echo "        -> rho = $DENSITY +/- $DENS_ERR"
+        
+        rm -f fort.31 fort.32
+    else
+        echo "        -> WARNING: no output??"
+        echo "$pid  0.0  0.0  0.0  0.0  0.0  0.0" >> $OUTDIR/isotherm_summary.dat
+    endif
+    
+    # cleanup (NOT fort.25, made that mistake before)
+    rm -f fort.11 fort.15 fort.21 fort.66
+
+end
+
+rm -f fort.25
+
+# ==============================================================================
+# DONE
+# ==============================================================================
+
+echo ""
+echo "============================================================"
+echo "  DONE"
+echo "============================================================"
+echo ""
+echo "Results: $OUTDIR/"
+echo ""
+echo "Plot:"
+echo "  python3 plot_isotherm.py $OUTDIR/isotherm_summary.dat"
+echo ""
+
+if ($IS_SUBCRITICAL == 1) then
+    echo "Check results against literature:"
+    echo "  Gas density:    ~$RHO_GAS_LIT (low PID)"
+    echo "  Liquid density: ~$RHO_LIQ_LIT (high PID)"
+    echo "  Transition at:  PID ~ $P_SAT"
+    echo ""
+endif
+
+echo "============================================================"
+echo ""
+
+exit
