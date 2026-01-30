@@ -1,7 +1,7 @@
 #!/bin/bash
-#
+
 # run_isotherm_v2 (bash version)
-# Runs 4 GCMC simulations in parallel - ~3.5x faster on 6-core CPU (I have an i5-12400F)
+# Runs 4 GCMC simulations in parallel - ~3.5x faster on 6-core CPU
 
 # Usage:
 #   1. Edit SLITWIDTH and TEMP below
@@ -13,12 +13,12 @@
 # PARAMETERS - CHANGE THESE
 # ==============================================================================
 
-SLITWIDTH=5.0      # slit width in sigma
-TEMP=0.9           # reduced temp T*
+SLITWIDTH=2.0      # slit width in sigma
+TEMP=2.0          # reduced temp T*
 NJOBS=4            # parallel jobs (4 is safe for 6-core)
 
 # ==============================================================================
-# Can likely keep this constant
+# PROBABLY DON'T NEED TO TOUCH THESE
 # ==============================================================================
 
 RHO_INIT=0.5       # starting density
@@ -204,6 +204,26 @@ done
 echo "Done."
 echo ""
 
+# Force all files to disk before starting any jobs
+sync
+sleep 0.5
+
+# Verify all input files exist
+echo "Verifying input files..."
+MISSING=0
+for pid in "${PID_VALUES[@]}"; do
+    if [[ ! -f "$OUTDIR/run_$pid/fort.15" ]]; then
+        echo "  ERROR: Missing fort.15 for PID=$pid"
+        MISSING=1
+    fi
+done
+if [[ $MISSING -eq 1 ]]; then
+    echo "ERROR: Some input files missing. Aborting."
+    exit 1
+fi
+echo "All input files verified."
+echo ""
+
 # ==============================================================================
 # RUN IN PARALLEL BATCHES
 # ==============================================================================
@@ -230,10 +250,10 @@ for pid in "${PID_VALUES[@]}"; do
         echo "--- Batch $BATCHNUM: PIDs $IRUN to $BATCHEND ---"
     fi
     
-    # Start job in background
+    # Start job in background - verify file readable first
     RUNDIR="$OUTDIR/run_$pid"
     echo "  Starting PID = $pid ..."
-    (cd "$RUNDIR" && ./mc_grand > output.txt 2>&1) &
+    (cd "$RUNDIR" && cat fort.15 > /dev/null && ./mc_grand > output.txt 2>&1) &
     
     # If batch is full or last job, wait
     if [[ $((IRUN % NJOBS)) -eq 0 ]] || [[ $IRUN -eq $NRUNS ]]; then
