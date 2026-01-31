@@ -47,7 +47,8 @@ c
          WRITE (6, *) ' ERROR: number of particles too large'
          STOP
       END IF
-      BOX = (NPART/rho)**(1.D00/3.D00)
+      BOX = DSQRT( NPART / (rho*LZ) )
+
       HBOX = 0.5D00*BOX
 c     ---read model parameters
       READ (25, *)
