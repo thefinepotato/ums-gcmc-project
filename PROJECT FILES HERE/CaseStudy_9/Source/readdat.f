@@ -10,7 +10,9 @@ c
       INCLUDE 'conf.inc'
       INCLUDE 'grand.inc'
       INTEGER ibeg, Equil, Prod, i, Ndispl, Nsamp, Nexch, Iseed
-      DOUBLE PRECISION eps, sig, CORU, CORP, vir, rho, Dr, pid
+      DOUBLE PRECISION eps, sig, CORU, CORP, vir, rho, Dr, pid   
+      CHARACTER*20 label
+
  
  
 c     ---read simulation data
@@ -37,7 +39,10 @@ c
       READ (15, *)
       READ (15, *) Ndispl, Nexch
       READ (15, *)
-      READ (15, *) NPART, TEMP, rho, pid, LZ
+      READ (15, *) NPART, TEMP, rho, pid
+      READ (15, *) label
+      READ (15, *) LZ
+
       IF (NPART.GT.NPMax) THEN
          WRITE (6, *) ' ERROR: number of particles too large'
          STOP
