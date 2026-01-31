@@ -11,7 +11,6 @@ c
       INCLUDE 'grand.inc'
       INTEGER ibeg, Equil, Prod, i, Ndispl, Nsamp, Nexch, Iseed
       DOUBLE PRECISION eps, sig, CORU, CORP, vir, rho, Dr, pid   
-      CHARACTER*20 label
 
  
  
@@ -33,15 +32,10 @@ c      rho     = initial density  (only for ibeg=0)
 c      pid     = ideal gas pressure reservoir (transfered to chemical potential)
 c
       READ (15, *)
-      READ (15, *) ibeg, Equil, Prod, Nsamp, Iseed
-      READ (15, *)
-      READ (15, *) Dr
-      READ (15, *)
       READ (15, *) Ndispl, Nexch
       READ (15, *)
-      READ (15, *) NPART, TEMP, rho, pid
-      READ (15, *) label
-      READ (15, *) LZ
+      READ (15, *) NPART, TEMP, rho, pid, LZ
+
 
       IF (NPART.GT.NPMax) THEN
          WRITE (6, *) ' ERROR: number of particles too large'

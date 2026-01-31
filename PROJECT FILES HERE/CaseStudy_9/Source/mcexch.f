@@ -17,7 +17,7 @@ c
       INTEGER o, Attempt, Nacc, jb, Iseed
  
       Attempt = Attempt + 1
-      vol = BOX*BOX*BOX
+      vol = BOX*BOX*LZ
       rhoo = NPART/vol
 c     ---select to add of delete a particle
       IF (RANF(Iseed).LE.0.5D0) THEN

@@ -17,10 +17,17 @@ c     ---select a particle at random
       o = INT(NPART*RANF(Iseed)) + 1
 c     ---calculate energy old configuration
       CALL ENERI(X(o), Y(o), Z(o), o, jb, eno, viro)
+
 c     ---give particle a random displacement
       xn = X(o) + (RANF(Iseed)-0.5D0)*Dr
       yn = Y(o) + (RANF(Iseed)-0.5D0)*Dr
       zn = Z(o) + (RANF(Iseed)-0.5D0)*Dr
+
+c     ---hard walls in z: reject immediately if outside pore
+      IF (zn.LT.0.0D0 .OR. zn.GT.LZ) THEN
+         RETURN
+      END IF
+
 c     ---calculate energy new configuration:
       CALL ENERI(xn, yn, zn, o, jb, enn, virn)
 c     ---acceptance test
@@ -34,8 +41,6 @@ c        ---put particle in simulation box
          IF (xn.GT.BOX) xn = xn - BOX
          IF (yn.LT.0) yn = yn + BOX
          IF (yn.GT.BOX) yn = yn - BOX
-               IF (zn.LT.0.0D0) jb = 0
-      IF (zn.GT.LZ)   jb = 0
 
          X(o) = xn
          Y(o) = yn
