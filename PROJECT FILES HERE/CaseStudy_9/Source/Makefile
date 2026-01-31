@@ -18,9 +18,12 @@ HDRS	      =
 
 INSTALL	      = install
 
-LD	      = f77
+LC	      = gfortran
 
 LDFLAGS	      = $(COMPFLAGS)
+FC            = gfortran
+FFLAGS        = $(COMPFLAGS)
+
 
 LIBS	      =
 
@@ -78,7 +81,8 @@ all:		$(PROGRAM)
 
 $(PROGRAM):     $(OBJS) $(LIBS) $(MAKEFILE)
 		@echo "Linking $(PROGRAM) ..."
-		@$(LD) $(LDFLAGS) $(OBJS) $(LIBS) -o $(PROGRAM)
+		@$(LC) $(LDFLAGS) $(OBJS) $(LIBS) -o $(PROGRAM)
+
 		@echo "done"
 
 clean:;		@rm -f $(OBJS) core
