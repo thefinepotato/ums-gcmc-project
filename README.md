@@ -93,6 +93,6 @@ git checkout your-name             # Go back to your branch
 
 ## Golden rules
 - **Never work directly on main**
-- Never use `git add .`
+- Never use `git add .` --> nvm just use it
 - Always check `git status` before committing
 - Communicate on Discord before merging to main
