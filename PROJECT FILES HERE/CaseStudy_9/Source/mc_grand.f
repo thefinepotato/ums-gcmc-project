@@ -59,7 +59,7 @@ c              ---sample averages
                   CALL SAMPLE(icycl, en, vir)
 c                   ---to determine exess chem. potential
                   nsampav = nsampav + 1
-                  rhoav = rhoav + NPART/(BOX*BOX*BOX)
+                  rhoav = rhoav + NPART/(BOX*BOX*LZ)
                END IF
             END IF
             IF (MOD(icycl,ncycl/5).EQ.0) THEN
